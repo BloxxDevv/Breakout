@@ -32,6 +32,10 @@ public class Paddle implements GameObject{
         renderer = new ShapeRenderer();
     }
 
+    public int getX() {
+        return x;
+    }
+
     public void setMovement(int direction, boolean value) {
         this.movement[direction] = value;
     }

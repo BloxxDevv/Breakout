@@ -9,19 +9,32 @@ import com.bloxxdev.breakout.gameObjects.Paddle;
 
 public class Breakout extends ScreenAdapter{
 
-    GameObject paddle;
+    public static GameObject paddle;
 
     GameObject ball;
+
+    public static boolean dead = false;
+    public static boolean paused = true;
     
     private void checkKeys(){
         if (Gdx.input.isKeyPressed(Input.Keys.A)) {
             ((Paddle) paddle).setMovement(Paddle.LEFT, true);
+            if (paused) {
+                paused = false;
+                ((Ball) ball).setMovement(Ball.LEFT, true);
+                ((Ball) ball).setMovement(Ball.UP, true);
+            }
         }else{
             ((Paddle) paddle).setMovement(Paddle.LEFT, false);
         }
 
         if (Gdx.input.isKeyPressed(Input.Keys.D)) {
             ((Paddle) paddle).setMovement(Paddle.RIGHT, true);
+            if (paused) {
+                paused = false;
+                ((Ball) ball).setMovement(Ball.RIGHT, true);
+                ((Ball) ball).setMovement(Ball.UP, true);
+            }
         }else{
             ((Paddle) paddle).setMovement(Paddle.RIGHT, false);
         }
@@ -36,10 +49,12 @@ public class Breakout extends ScreenAdapter{
     }
 
     public void tick(){
-        checkKeys();
+        if (!dead){
+            checkKeys();
 
-        paddle.tick();
-        ball.tick();
+            paddle.tick();
+            ball.tick();
+        }
     }
 
     @Override
