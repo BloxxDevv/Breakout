@@ -13,7 +13,7 @@ public class Breakout extends ScreenAdapter{
     public void show() {
         Gdx.gl.glClearColor(20/255.0F, 20/255.0F, 100/255.0F, 0);
 
-        paddle = new Paddle();
+        paddle = new Paddle(Gdx.graphics.getWidth()/2 - Paddle.PADDLE_WIDTH/2, 0);
     }
 
     public void tick(){
