@@ -1,8 +1,8 @@
 package com.bloxxdev.breakout.gameObjects;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Paddle implements GameObject{
 
@@ -17,7 +17,9 @@ public class Paddle implements GameObject{
     private int x;
     private int y;
 
-    private ShapeRenderer renderer;
+    private SpriteBatch spriteBatch;
+
+    private Texture paddleTexture;
 
     private boolean[] movement = new boolean[]
     {
@@ -29,7 +31,8 @@ public class Paddle implements GameObject{
         this.x = x;
         this.y = y;
 
-        renderer = new ShapeRenderer();
+        paddleTexture = new Texture(Gdx.files.internal("Paddle.png"));
+        spriteBatch = new SpriteBatch();
     }
 
     public int getX() {
@@ -66,11 +69,11 @@ public class Paddle implements GameObject{
 
     @Override
     public void render() {
-        renderer.begin(ShapeType.Filled);
+        spriteBatch.begin();
 
-        renderer.rect(x, y, PADDLE_WIDTH, PADDLE_HEIGHT);
+        spriteBatch.draw(paddleTexture, x, y, PADDLE_WIDTH, PADDLE_HEIGHT);
 
-        renderer.end();
+        spriteBatch.end();
     }
 
     @Override

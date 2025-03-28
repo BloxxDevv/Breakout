@@ -1,6 +1,8 @@
 package com.bloxxdev.breakout.gameObjects;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.bloxxdev.breakout.screens.Breakout;
@@ -16,7 +18,9 @@ public class Ball implements GameObject {
 
     public static final int SPEED = 8;
 
-    private ShapeRenderer renderer;
+    private SpriteBatch spriteBatch;
+
+    private Texture ballTexture;
 
     private int x;
     private int y;
@@ -33,7 +37,8 @@ public class Ball implements GameObject {
         this.x = x;
         this.y = y;
 
-        renderer = new ShapeRenderer();
+        ballTexture = new Texture(Gdx.files.internal("Ball.png"));
+        spriteBatch = new SpriteBatch();
     }
 
     public void setMovement(int direction, boolean value) {
@@ -101,9 +106,9 @@ public class Ball implements GameObject {
 
     @Override
     public void render() {
-        renderer.begin(ShapeType.Filled);
-        renderer.rect(x, y, SIZE, SIZE);
-        renderer.end();
+        spriteBatch.begin();
+        spriteBatch.draw(ballTexture, x, y, SIZE, SIZE);
+        spriteBatch.end();
     }
 
     @Override
