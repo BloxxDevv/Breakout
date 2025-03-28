@@ -25,6 +25,13 @@ public class Paddle implements GameObject{
         false
     };
 
+    public Paddle(int x, int y){
+        this.x = x;
+        this.y = y;
+
+        renderer = new ShapeRenderer();
+    }
+
     public void setMovement(int direction, boolean value) {
         this.movement[direction] = value;
     }
@@ -46,13 +53,6 @@ public class Paddle implements GameObject{
                 }
             }
         }
-    }
-
-    public Paddle(int x, int y){
-        this.x = x;
-        this.y = y;
-
-        renderer = new ShapeRenderer();
     }
 
     @Override
