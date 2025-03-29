@@ -1,7 +1,5 @@
 package com.bloxxdev.breakout.gameObjects;
 
-import java.util.ArrayList;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -61,7 +59,11 @@ public class Ball implements GameObject {
                     if (x <= b.getX()+Block.WIDTH && x+SIZE >= b.getX()) {
                         blockY = b.getY();
                         collided = true;
-                        blocksArr[c++] = b;
+                        if (b.getBlockType() > 1){
+                            b.damageBlock();
+                        }else{
+                            blocksArr[c++] = b;
+                        }
                     }
                 }
             }
@@ -70,7 +72,11 @@ public class Ball implements GameObject {
                     if (y <= b.getY()+Block.HEIGHT && y+SIZE >= b.getY()) {
                         blockX = b.getX();
                         collided = true;
-                        blocksArr[c++] = b;
+                        if (b.getBlockType() > 1){
+                            b.damageBlock();
+                        }else{
+                            blocksArr[c++] = b;
+                        }
                     }
                 }
             }
@@ -79,7 +85,11 @@ public class Ball implements GameObject {
                     if (y <= b.getY()+Block.HEIGHT && y+SIZE >= b.getY()) {
                         blockX = b.getX();
                         collided = true;
-                        blocksArr[c++] = b;
+                        if (b.getBlockType() > 1){
+                            b.damageBlock();
+                        }else{
+                            blocksArr[c++] = b;
+                        }
                     }
                 }
             }
@@ -88,7 +98,11 @@ public class Ball implements GameObject {
                     if (x <= b.getX()+Block.WIDTH && x+SIZE >= b.getX()) {
                         blockY = b.getY();
                         collided = true;
-                        blocksArr[c++] = b;
+                        if (b.getBlockType() > 1){
+                            b.damageBlock();
+                        }else{
+                            blocksArr[c++] = b;
+                        }
                     }
                 }
             }

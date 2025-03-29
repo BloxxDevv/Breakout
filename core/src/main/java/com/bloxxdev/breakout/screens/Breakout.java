@@ -39,27 +39,27 @@ public class Breakout extends ScreenAdapter{
                 int y = Integer.parseInt(blockData.split(";")[1]);
                 String color = blockData.split(";")[2];
 
-                Color c = Color.WHITE;
+                int type = 0;
 
                 switch (color) {
                     case "RED":
-                        c = Color.RED;
+                        type = 5;
                         break;
                     case "BLUE":
-                        c = Color.BLUE;
+                        type = 4;
                         break;
                     case "GREEN":
-                        c = Color.GREEN;
+                        type = 3;
                         break;
                     case "YELLOW":
-                        c = Color.YELLOW;
+                        type = 2;
                         break;
                     case "PURPLE":
-                        c = Color.PURPLE;
+                        type = 1;
                         break;
                 }
 
-                blocks.add(new Block(x, Gdx.graphics.getHeight() - Block.HEIGHT - y, c));
+                blocks.add(new Block(x, Gdx.graphics.getHeight() - Block.HEIGHT - y, type));
             }
             br.close();
         }catch(Exception e){

@@ -17,14 +17,33 @@ public class Block implements GameObject{
 
     private Color color;
 
-    public Block(int x, int y, Color color){
+    private int blockType;
+
+    public Block(int x, int y, int blockType){
         blockTexture = new Texture(Gdx.files.internal("Block.png"));
         spriteBatch = new SpriteBatch();
 
         this.x = x;
         this.y = y;
-        this.color = color;
+        this.blockType = blockType;
 
+        switch (blockType) {
+            case 5:
+                color = Color.RED;
+                break;
+            case 4:
+                color = Color.BLUE;
+                break;
+            case 3:
+                color = Color.GREEN;
+                break;
+            case 2:
+                color = Color.YELLOW;
+                break;
+            case 1:
+                color = Color.PURPLE;
+                break;
+        }
     }
 
     public int getX() {
@@ -35,10 +54,33 @@ public class Block implements GameObject{
         return y;
     }
 
+    public void damageBlock(){
+        blockType--;
+    }
+
+    public int getBlockType() {
+        return blockType;
+    }
 
     @Override
     public void tick() {
-
+        switch (blockType) {
+            case 5:
+                color = Color.RED;
+                break;
+            case 4:
+                color = Color.BLUE;
+                break;
+            case 3:
+                color = Color.GREEN;
+                break;
+            case 2:
+                color = Color.YELLOW;
+                break;
+            case 1:
+                color = Color.PURPLE;
+                break;
+        }
     }
 
     @Override
