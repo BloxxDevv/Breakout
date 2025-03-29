@@ -18,6 +18,8 @@ public class Button {
 
     Texture currentTexture = buttonTexture;
 
+    NumberFont numberFont;
+
     public Button (Texture buttonTexture, Texture buttonHoverTexture, int x, int y, String text){
         this.buttonTexture = buttonTexture;
         this.buttonHoverTexture = buttonHoverTexture;
@@ -28,6 +30,8 @@ public class Button {
 
         this.width = buttonTexture.getWidth();
         this.height = buttonTexture.getHeight();
+
+        numberFont = new NumberFont();  
     }
 
     public void tick(){
@@ -44,6 +48,8 @@ public class Button {
         spriteBatch.draw(currentTexture, x, y);
 
         spriteBatch.end();
+
+        numberFont.drawNumber(Integer.parseInt(text), (x + width/2) - (text.length()*NumberFont.FONT_WIDTH + (text.length()-1) * NumberFont.SPACING) / 2, (y + height/2) - NumberFont.FONT_HEIGHT/2, 1);
     }
 
     public void dispose(){
