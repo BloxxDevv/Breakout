@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
-import com.badlogic.gdx.graphics.Color;
 import com.bloxxdev.breakout.gameObjects.Ball;
 import com.bloxxdev.breakout.gameObjects.Block;
 import com.bloxxdev.breakout.gameObjects.GameObject;
@@ -24,6 +23,8 @@ public class Breakout extends ScreenAdapter{
     public static boolean paused = true;
 
     public static ArrayList<Block> blocks = new ArrayList<>();
+
+    private boolean shouldLoop = false;
     
     public Breakout(File data){
         try{
@@ -98,10 +99,11 @@ public class Breakout extends ScreenAdapter{
 
         paddle = new Paddle(Gdx.graphics.getWidth()/2 - Paddle.PADDLE_WIDTH/2, 0);
         ball = new Ball(Gdx.graphics.getWidth()/2 - Ball.SIZE/2, Paddle.PADDLE_HEIGHT);
+        shouldLoop = true;
     }
 
     public void tick(){
-        if (!dead){
+        if (!dead && shouldLoop){
             checkKeys();
 
             paddle.tick();
@@ -114,15 +116,18 @@ public class Breakout extends ScreenAdapter{
 
     @Override
     public void render(float delta) {
-        paddle.render();
-        ball.render();
-        for (Block b : blocks) {
-            b.render();
+        if (shouldLoop) {
+            paddle.render();
+            ball.render();
+            for (Block b : blocks) {
+                b.render();
+            }
         }
     }
 
     @Override
     public void dispose() {
+        shouldLoop = false;
         paddle.dispose();
         ball.dispose();
         for (Block b : blocks) {
