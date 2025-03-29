@@ -27,6 +27,15 @@ public class Block implements GameObject{
 
     }
 
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+
     @Override
     public void tick() {
 

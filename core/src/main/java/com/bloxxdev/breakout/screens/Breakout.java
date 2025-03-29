@@ -3,7 +3,6 @@ package com.bloxxdev.breakout.screens;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
@@ -24,7 +23,7 @@ public class Breakout extends ScreenAdapter{
     public static boolean dead = false;
     public static boolean paused = true;
 
-    private ArrayList<Block> blocks = new ArrayList<>();
+    public static ArrayList<Block> blocks = new ArrayList<>();
     
     public Breakout(File data){
         try{
