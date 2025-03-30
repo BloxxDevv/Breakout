@@ -25,12 +25,14 @@ public class Breakout extends ScreenAdapter{
     public static ArrayList<Block> blocks = new ArrayList<>();
 
     private boolean shouldLoop = false;
+
+    private int level = 0;
     
-    public Breakout(File data){
+    public Breakout(File data, int level){
         try{
             BufferedReader br = new BufferedReader(new FileReader(data));
             while (br.ready()) {           
-                String blockData = br.readLine();
+                String blockData = br.readLine().trim();
 
                 if (blockData.startsWith("#") || blockData.isBlank()){
                     continue;
@@ -58,6 +60,9 @@ public class Breakout extends ScreenAdapter{
                     case "PURPLE":
                         type = 1;
                         break;
+                    case "GRAY":
+                        type = -1;
+                        break;
                 }
 
                 blocks.add(new Block(x, Gdx.graphics.getHeight() - Block.HEIGHT - y, type));
@@ -66,6 +71,8 @@ public class Breakout extends ScreenAdapter{
         }catch(Exception e){
             e.printStackTrace();
         }
+
+        this.level = level;
     }
 
     private void checkKeys(){

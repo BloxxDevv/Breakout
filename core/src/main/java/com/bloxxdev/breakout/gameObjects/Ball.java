@@ -14,7 +14,7 @@ public class Ball implements GameObject {
 
     public static final int SIZE = 10;
 
-    public static final int SPEED = 8;
+    public static final int SPEED = 6;
 
     private SpriteBatch spriteBatch;
 
@@ -61,7 +61,7 @@ public class Ball implements GameObject {
                         collided = true;
                         if (b.getBlockType() > 1){
                             b.damageBlock();
-                        }else{
+                        }else if (b.getBlockType() > -1){
                             blocksArr[c++] = b;
                         }
                     }
@@ -74,7 +74,7 @@ public class Ball implements GameObject {
                         collided = true;
                         if (b.getBlockType() > 1){
                             b.damageBlock();
-                        }else{
+                        }else if (b.getBlockType() > -1){
                             blocksArr[c++] = b;
                         }
                     }
@@ -87,7 +87,7 @@ public class Ball implements GameObject {
                         collided = true;
                         if (b.getBlockType() > 1){
                             b.damageBlock();
-                        }else{
+                        }else if (b.getBlockType() > -1){
                             blocksArr[c++] = b;
                         }
                     }
@@ -100,7 +100,7 @@ public class Ball implements GameObject {
                         collided = true;
                         if (b.getBlockType() > 1){
                             b.damageBlock();
-                        }else{
+                        }else if (b.getBlockType() > -1){
                             blocksArr[c++] = b;
                         }
                     }

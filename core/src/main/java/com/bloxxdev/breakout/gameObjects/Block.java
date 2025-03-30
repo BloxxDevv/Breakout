@@ -43,6 +43,9 @@ public class Block implements GameObject{
             case 1:
                 color = Color.PURPLE;
                 break;
+            case -1:
+                color = Color.GRAY;
+                break;
         }
     }
 

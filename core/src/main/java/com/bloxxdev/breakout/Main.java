@@ -10,11 +10,15 @@ import com.bloxxdev.breakout.screens.LevelMenu;
 
 public class Main extends ApplicationAdapter {
 
-    Breakout breakout;
+    public static Breakout breakout;
     LevelMenu levelSelector;
 
-    File[] levels = new File[]{
-        new File("core/levels/level1.txt")
+    public static File[] levels = new File[]{
+        new File("core/levels/level1.txt"),
+        new File("core/levels/level2.txt"),
+        new File("core/levels/level3.txt"),
+        new File("core/levels/level4.txt"),
+        new File("core/levels/level5.txt")
     };
 
     @Override
@@ -23,9 +27,6 @@ public class Main extends ApplicationAdapter {
 
         levelSelector = new LevelMenu();
         levelSelector.show();
-
-        //breakout = new Breakout(levels[0]);
-        //breakout.show();
     }
 
     public void tick(){

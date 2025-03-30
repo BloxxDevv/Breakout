@@ -4,10 +4,13 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.bloxxdev.breakout.Main;
 import com.bloxxdev.breakout.menuItems.Button;
+import com.bloxxdev.breakout.menuItems.EventExecutor;
 
 public class LevelMenu extends ScreenAdapter{
-    
+    boolean shouldRender = false;
+
     Texture mapTexture;
 
     Texture levelButton;
@@ -24,34 +27,75 @@ public class LevelMenu extends ScreenAdapter{
         levelButton = new Texture(Gdx.files.internal("LevelButton.png"));
         levelButtonHover = new Texture(Gdx.files.internal("LevelButtonHover.png"));
 
-        buttons[0] = new Button(levelButton, levelButtonHover, 160, 230, "1");
-        buttons[1] = new Button(levelButton, levelButtonHover, 240, 430, "2");
-        buttons[2] = new Button(levelButton, levelButtonHover, 305, 270, "3");
-        buttons[3] = new Button(levelButton, levelButtonHover, 510, 250, "4");
-        buttons[4] = new Button(levelButton, levelButtonHover, 640, 400, "5");
+        buttons[0] = new Button(levelButton, levelButtonHover, 160, 230, "1", new EventExecutor() {
+            @Override
+            public void execute() {
+                hide();
+                Main.breakout = new Breakout(Main.levels[0], 1);
+                Main.breakout.show();
+            }
+        });
+        buttons[1] = new Button(levelButton, levelButtonHover, 240, 430, "2", new EventExecutor() {
+            @Override
+            public void execute() {
+                hide();
+                Main.breakout = new Breakout(Main.levels[1], 2);
+                Main.breakout.show();
+            }
+        });
+        buttons[2] = new Button(levelButton, levelButtonHover, 305, 270, "3", new EventExecutor() {
+            @Override
+            public void execute() {
+                hide();
+                Main.breakout = new Breakout(Main.levels[2], 3);
+                Main.breakout.show();
+            }
+        });
+        buttons[3] = new Button(levelButton, levelButtonHover, 510, 250, "4", new EventExecutor() {
+            @Override
+            public void execute() {
+                hide();
+                Main.breakout = new Breakout(Main.levels[3], 4);
+                Main.breakout.show();
+            }
+        });
+        buttons[4] = new Button(levelButton, levelButtonHover, 640, 400, "5", new EventExecutor() {
+            @Override
+            public void execute() {
+                hide();
+                Main.breakout = new Breakout(Main.levels[4], 5);
+                Main.breakout.show();
+            }
+        });
+        shouldRender = true;
     }
 
     public void tick(){
-        for (Button button : buttons) {
-            button.tick();
+        if (shouldRender) {
+            for (Button button : buttons) {
+                button.tick();
+            }
         }
     }
 
     @Override
     public void render(float delta) {
-        spriteBatch.begin();
+        if (shouldRender) {
+            spriteBatch.begin();
 
-        spriteBatch.draw(mapTexture, 0, 0);
+            spriteBatch.draw(mapTexture, 0, 0);
+        
+            spriteBatch.end();
     
-        spriteBatch.end();
-
-        for (Button button : buttons) {
-            button.render();
+            for (Button button : buttons) {
+                button.render();
+            }
         }
     }
 
     @Override
     public void hide() {
+        shouldRender = false;
         dispose();
     }
 

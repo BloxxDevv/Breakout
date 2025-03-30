@@ -20,7 +20,9 @@ public class Button {
 
     NumberFont numberFont;
 
-    public Button (Texture buttonTexture, Texture buttonHoverTexture, int x, int y, String text){
+    EventExecutor buttonAction;
+
+    public Button (Texture buttonTexture, Texture buttonHoverTexture, int x, int y, String text, EventExecutor buttonAction){
         this.buttonTexture = buttonTexture;
         this.buttonHoverTexture = buttonHoverTexture;
         this.x = x;
@@ -32,11 +34,15 @@ public class Button {
         this.height = buttonTexture.getHeight();
 
         numberFont = new NumberFont();  
+        this.buttonAction = buttonAction;
     }
 
     public void tick(){
         if (Gdx.input.getX() >= x && Gdx.input.getX() <= x+width && Gdx.graphics.getHeight() - Gdx.input.getY() >= y && Gdx.graphics.getHeight() - Gdx.input.getY() <= y+width) {
             currentTexture = buttonHoverTexture;
+            if (Gdx.input.isTouched()) {
+                buttonAction.execute();
+            }
         }else{
             currentTexture = buttonTexture;
         }
