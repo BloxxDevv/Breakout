@@ -55,8 +55,8 @@ public class Ball implements GameObject {
 
         for (Block b : Breakout.blocks) {
             if (direction == UP) {
-                if (y+SIZE+SPEED >= b.getY() && y+SIZE <= b.getY()){
-                    if (x <= b.getX()+Block.WIDTH && x+SIZE >= b.getX()) {
+                if (y+SIZE+SPEED > b.getY() && y+SIZE < b.getY()){
+                    if (x < b.getX()+Block.WIDTH && x+SIZE > b.getX()) {
                         blockY = b.getY();
                         collided = true;
                         if (b.getBlockType() > 1){
@@ -66,37 +66,34 @@ public class Ball implements GameObject {
                         }
                     }
                 }
-            }
-            if (direction == LEFT) {
-                if (x-SPEED <= b.getX()+Block.WIDTH && x >= b.getX()+Block.HEIGHT){
-                    if (y <= b.getY()+Block.HEIGHT && y+SIZE >= b.getY()) {
-                        blockX = b.getX();
-                        collided = true;
-                        if (b.getBlockType() > 1){
-                            b.damageBlock();
-                        }else if (b.getBlockType() > -1){
-                            blocksArr[c++] = b;
-                        }
-                    }
-                }
-            }
-            if (direction == RIGHT) {
-                if (x+SIZE+SPEED >= b.getX() && x+SIZE <= b.getX()) {
-                    if (y <= b.getY()+Block.HEIGHT && y+SIZE >= b.getY()) {
-                        blockX = b.getX();
-                        collided = true;
-                        if (b.getBlockType() > 1){
-                            b.damageBlock();
-                        }else if (b.getBlockType() > -1){
-                            blocksArr[c++] = b;
-                        }
-                    }
-                }
-            }
-            if (direction == DOWN) {
-                if (y-SPEED <= b.getY()+Block.HEIGHT && y >= b.getY()+Block.HEIGHT) {
-                    if (x <= b.getX()+Block.WIDTH && x+SIZE >= b.getX()) {
+            }else if (direction == DOWN) {
+                if (y-SPEED < b.getY()+Block.HEIGHT && y > b.getY()+Block.HEIGHT) {
+                    if (x < b.getX()+Block.WIDTH && x+SIZE > b.getX()) {
                         blockY = b.getY();
+                        collided = true;
+                        if (b.getBlockType() > 1){
+                            b.damageBlock();
+                        }else if (b.getBlockType() > -1){
+                            blocksArr[c++] = b;
+                        }
+                    }
+                }
+            }else if (direction == LEFT) {
+                if (x-SPEED < b.getX()+Block.WIDTH && x > b.getX()+Block.HEIGHT){
+                    if (y < b.getY()+Block.HEIGHT && y+SIZE > b.getY()) {
+                        blockX = b.getX();
+                        collided = true;
+                        if (b.getBlockType() > 1){
+                            b.damageBlock();
+                        }else if (b.getBlockType() > -1){
+                            blocksArr[c++] = b;
+                        }
+                    }
+                }
+            }else if (direction == RIGHT) {
+                if (x+SIZE+SPEED > b.getX() && x+SIZE < b.getX()) {
+                    if (y < b.getY()+Block.HEIGHT && y+SIZE > b.getY()) {
+                        blockX = b.getX();
                         collided = true;
                         if (b.getBlockType() > 1){
                             b.damageBlock();
@@ -119,27 +116,24 @@ public class Ball implements GameObject {
 
                 movement[UP] = false;
                 movement[DOWN] = true;
-            }
-            if (direction == LEFT) {
-                int dist = x-(blockX+Block.WIDTH);
-                x -= dist - (SPEED - dist);
-
-                movement[LEFT] = false;
-                movement[RIGHT] = true;
-            }
-            if (direction == RIGHT) {
-                int dist = blockX - (x+SIZE);
-                x += dist - (SPEED - dist);
-
-                movement[RIGHT] = false;
-                movement[LEFT] = true;
-            }
-            if (direction == DOWN) {
+            }else if (direction == DOWN) {
                 int dist = y-(blockY+Block.HEIGHT);
                 y-= dist - (SPEED - dist);
 
                 movement[DOWN] = false;
                 movement[UP] = true;
+            }else if (direction == LEFT) {
+                int dist = x-(blockX+Block.WIDTH);
+                x -= dist - (SPEED - dist);
+
+                movement[LEFT] = false;
+                movement[RIGHT] = true;
+            }else if (direction == RIGHT) {
+                int dist = blockX - (x+SIZE);
+                x += dist - (SPEED - dist);
+
+                movement[RIGHT] = false;
+                movement[LEFT] = true;
             }
         }
 
@@ -160,12 +154,12 @@ public class Ball implements GameObject {
                 movement[RIGHT] = true;
             }
         }else if (movement[RIGHT]) {
-            if (x+SPEED <= Gdx.graphics.getWidth() - SIZE) {
+            if (x+SIZE+SPEED <= Gdx.graphics.getWidth()) {
                 if (!checkBlocks(RIGHT)) {
                     x+=SPEED;
                 }
             }else{
-                int dist = Gdx.graphics.getWidth() - x;
+                int dist = Gdx.graphics.getWidth() - (x+SIZE);
                 x += dist - (SPEED - dist);
 
                 movement[RIGHT] = false;
@@ -174,19 +168,20 @@ public class Ball implements GameObject {
         }
 
         if (movement[UP]) {
-            if (y+SPEED <= Gdx.graphics.getHeight()-SIZE) {
+            if (y+SIZE+SPEED <= Gdx.graphics.getHeight()) {
                 if (!checkBlocks(UP)) {
                     y+=SPEED;
                 }
             }else{
-                int dist = Gdx.graphics.getHeight() - y;
+                System.out.println(y);
+                int dist = Gdx.graphics.getHeight() - (y+SIZE);
                 y += dist - (SPEED - dist);
 
                 movement[UP] = false;
                 movement[DOWN] = true;
             }
         }else if (movement[DOWN]) {
-            if (y-SPEED >= SIZE) {
+            if (y-SPEED >= Paddle.PADDLE_HEIGHT) {
                 if (!checkBlocks(DOWN)) {
                     y-=SPEED;
                 }
