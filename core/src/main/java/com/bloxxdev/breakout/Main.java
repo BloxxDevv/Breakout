@@ -11,7 +11,9 @@ import com.bloxxdev.breakout.screens.LevelMenu;
 public class Main extends ApplicationAdapter {
 
     public static Breakout breakout;
-    LevelMenu levelSelector;
+    public LevelMenu levelSelector;
+
+    public static Main instance;
 
     public static File[] levels = new File[]{
         new File("core/levels/level1.txt"),
@@ -23,6 +25,8 @@ public class Main extends ApplicationAdapter {
 
     @Override
     public void create() {
+        instance = this;
+
         Gdx.gl.glClearColor(20/255.0F, 20/255.0F, 100/255.0F, 0);
 
         levelSelector = new LevelMenu();

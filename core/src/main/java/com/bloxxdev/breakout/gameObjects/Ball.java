@@ -49,11 +49,8 @@ public class Ball implements GameObject {
         this.movement[direction] = value;
     }
 
-    private void checkBlocks(){
-        
-    }
-
     int d = 0;
+
     int lastxdir = 0;
     int lastydir = 0;
 
@@ -72,11 +69,11 @@ public class Ball implements GameObject {
                 movement[LEFT] = true;
             }
             if (hitbox.getCorners()[AABB.BOTTOM] == Paddle.PADDLE_HEIGHT) {
-                //if (hitbox.getCorners()[AABB.RIGHT] >= ((Paddle)Breakout.paddle).getX() && 
-                //    hitbox.getCorners()[AABB.LEFT] <= ((Paddle)Breakout.paddle).getX()+Paddle.PADDLE_WIDTH-1){
+                if (hitbox.getCorners()[AABB.RIGHT] >= ((Paddle)Breakout.paddle).getX() && 
+                    hitbox.getCorners()[AABB.LEFT] <= ((Paddle)Breakout.paddle).getX()+Paddle.PADDLE_WIDTH-1){
                     movement[DOWN] = false;
                     movement[UP] = true;
-                //}
+                }
             }else if (hitbox.getCorners()[AABB.TOP] == Gdx.graphics.getHeight()-1) {
                 movement[UP] = false;
                 movement[DOWN] = true;
@@ -91,9 +88,6 @@ public class Ball implements GameObject {
             AABB bothMoveBox = hitbox.cloneMove(lastxdir, lastydir);
 
             for (Block b : Breakout.blocks) {
-                if (hitbox.intersects(b.getHitbox())) {
-                    System.out.println("BRO HOW THE FUCK MAN");
-                }
                 if (vertMoveBox.intersects(b.getHitbox())) {
                     vertIntersect.add(b);
                 }
@@ -101,7 +95,6 @@ public class Ball implements GameObject {
                     horIntersect.add(b);
                 }
                 if (bothMoveBox.intersects(b.getHitbox())) {
-                    System.out.println("yep");
                     bothIntersect.add(b);
                 }
             }
@@ -111,7 +104,6 @@ public class Ball implements GameObject {
                 movement[RIGHT] = !movement[RIGHT];
                 movement[UP] = !movement[UP];
                 movement[DOWN] = !movement[DOWN];
-                System.out.println(d++);
             }else{
                 if (horIntersect.size() > 0 && vertIntersect.size() < 2) {
                     movement[LEFT] = !movement[LEFT];
@@ -152,7 +144,9 @@ public class Ball implements GameObject {
 
     @Override
     public void tick() {
-        move();
+        if (!Breakout.paused) {
+            move();
+        }
     }
 
     @Override

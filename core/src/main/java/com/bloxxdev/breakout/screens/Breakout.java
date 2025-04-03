@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
+import com.bloxxdev.breakout.Main;
 import com.bloxxdev.breakout.gameObjects.Ball;
 import com.bloxxdev.breakout.gameObjects.Block;
 import com.bloxxdev.breakout.gameObjects.GameObject;
@@ -26,7 +27,7 @@ public class Breakout extends ScreenAdapter{
 
     private boolean shouldLoop = false;
 
-    private int level = 0;
+    public static int level = 1;
     
     public Breakout(File data, int level){
         try{
@@ -76,7 +77,7 @@ public class Breakout extends ScreenAdapter{
     }
 
     private void checkKeys(){
-        if (Gdx.input.isKeyPressed(Input.Keys.A)) {
+        if (Gdx.input.isKeyPressed(Input.Keys.A) || Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
             ((Paddle) paddle).setMovement(Paddle.LEFT, true);
             if (paused) {
                 paused = false;
@@ -87,7 +88,7 @@ public class Breakout extends ScreenAdapter{
             ((Paddle) paddle).setMovement(Paddle.LEFT, false);
         }
 
-        if (Gdx.input.isKeyPressed(Input.Keys.D)) {
+        if (Gdx.input.isKeyPressed(Input.Keys.D) || Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
             ((Paddle) paddle).setMovement(Paddle.RIGHT, true);
             if (paused) {
                 paused = false;
@@ -109,7 +110,29 @@ public class Breakout extends ScreenAdapter{
         shouldLoop = true;
     }
 
+    private boolean won(){
+        for (Block block : blocks) {
+            if (block.getBlockType() > 0) {
+                return false;
+            }
+        }
+
+        blocks = new ArrayList<>();
+
+        return true;
+    }
+
     public void tick(){
+        if (won() && !Main.instance.levelSelector.shouldRender) {
+            shouldLoop = false;
+            if (level < 5) {
+                level++;   
+            }
+            hide();
+            Main.instance.levelSelector.shouldRender = true;
+            paused = true;
+        }
+
         if (!dead && shouldLoop){
             checkKeys();
 
@@ -130,6 +153,11 @@ public class Breakout extends ScreenAdapter{
                 b.render();
             }
         }
+    }
+
+    @Override
+    public void hide() {
+        dispose();
     }
 
     @Override

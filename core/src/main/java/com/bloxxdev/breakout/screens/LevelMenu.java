@@ -15,10 +15,11 @@ public class LevelMenu extends ScreenAdapter{
 
     Texture levelButton;
     Texture levelButtonHover;
+    Texture levelButtonLocked;
 
     SpriteBatch spriteBatch;
     
-    Button[] buttons = new Button[5];
+    public static Button[] buttons = new Button[5];
 
     @Override
     public void show() {
@@ -26,8 +27,9 @@ public class LevelMenu extends ScreenAdapter{
         mapTexture = new Texture(Gdx.files.internal("Map.png"));
         levelButton = new Texture(Gdx.files.internal("LevelButton.png"));
         levelButtonHover = new Texture(Gdx.files.internal("LevelButtonHover.png"));
+        levelButtonLocked = new Texture(Gdx.files.internal("LevelButtonLocked.png"));
 
-        buttons[0] = new Button(levelButton, levelButtonHover, 160, 230, "1", new EventExecutor() {
+        buttons[0] = new Button(levelButton, levelButtonHover, levelButtonLocked, 160, 230, "1", new EventExecutor() {
             @Override
             public void execute() {
                 hide();
@@ -35,7 +37,7 @@ public class LevelMenu extends ScreenAdapter{
                 Main.breakout.show();
             }
         });
-        buttons[1] = new Button(levelButton, levelButtonHover, 240, 430, "2", new EventExecutor() {
+        buttons[1] = new Button(levelButton, levelButtonHover, levelButtonLocked, 240, 430, "2", new EventExecutor() {
             @Override
             public void execute() {
                 hide();
@@ -43,7 +45,7 @@ public class LevelMenu extends ScreenAdapter{
                 Main.breakout.show();
             }
         });
-        buttons[2] = new Button(levelButton, levelButtonHover, 305, 270, "3", new EventExecutor() {
+        buttons[2] = new Button(levelButton, levelButtonHover, levelButtonLocked, 305, 270, "3", new EventExecutor() {
             @Override
             public void execute() {
                 hide();
@@ -51,7 +53,7 @@ public class LevelMenu extends ScreenAdapter{
                 Main.breakout.show();
             }
         });
-        buttons[3] = new Button(levelButton, levelButtonHover, 510, 250, "4", new EventExecutor() {
+        buttons[3] = new Button(levelButton, levelButtonHover, levelButtonLocked, 510, 250, "4", new EventExecutor() {
             @Override
             public void execute() {
                 hide();
@@ -59,7 +61,7 @@ public class LevelMenu extends ScreenAdapter{
                 Main.breakout.show();
             }
         });
-        buttons[4] = new Button(levelButton, levelButtonHover, 640, 400, "5", new EventExecutor() {
+        buttons[4] = new Button(levelButton, levelButtonHover, levelButtonLocked, 640, 400, "5", new EventExecutor() {
             @Override
             public void execute() {
                 hide();
@@ -71,6 +73,10 @@ public class LevelMenu extends ScreenAdapter{
     }
 
     public void tick(){
+        for (int i = 0; i < Breakout.level; i++) {
+            LevelMenu.buttons[i].setLocked(false);
+        }
+
         if (shouldRender) {
             for (Button button : buttons) {
                 button.tick();

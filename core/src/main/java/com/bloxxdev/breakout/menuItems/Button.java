@@ -8,6 +8,7 @@ public class Button {
 
     Texture buttonTexture;
     Texture buttonHoverTexture;
+    Texture buttonLockedTexture;
     int x;
     int y;
     String text;
@@ -22,9 +23,12 @@ public class Button {
 
     EventExecutor buttonAction;
 
-    public Button (Texture buttonTexture, Texture buttonHoverTexture, int x, int y, String text, EventExecutor buttonAction){
+    private boolean locked = true;
+
+    public Button (Texture buttonTexture, Texture buttonHoverTexture, Texture buttonLockedTexture, int x, int y, String text, EventExecutor buttonAction){
         this.buttonTexture = buttonTexture;
         this.buttonHoverTexture = buttonHoverTexture;
+        this.buttonLockedTexture = buttonLockedTexture;
         this.x = x;
         this.y = y;
         this.text = text;
@@ -38,14 +42,22 @@ public class Button {
     }
 
     public void tick(){
-        if (Gdx.input.getX() >= x && Gdx.input.getX() <= x+width && Gdx.graphics.getHeight() - Gdx.input.getY() >= y && Gdx.graphics.getHeight() - Gdx.input.getY() <= y+width) {
-            currentTexture = buttonHoverTexture;
-            if (Gdx.input.isTouched()) {
-                buttonAction.execute();
-            }
+        if (locked) {
+            currentTexture = buttonLockedTexture;
         }else{
-            currentTexture = buttonTexture;
+            if (Gdx.input.getX() >= x && Gdx.input.getX() <= x+width && Gdx.graphics.getHeight() - Gdx.input.getY() >= y && Gdx.graphics.getHeight() - Gdx.input.getY() <= y+width) {
+                currentTexture = buttonHoverTexture;
+                if (Gdx.input.isTouched()) {
+                    buttonAction.execute();
+                }
+            }else{
+                currentTexture = buttonTexture;
+            }
         }
+    }
+
+    public void setLocked(boolean locked) {
+        this.locked = locked;
     }
 
     public void render(){

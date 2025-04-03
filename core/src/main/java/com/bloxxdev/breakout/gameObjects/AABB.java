@@ -4,8 +4,8 @@ public class AABB {
 
     public static final int LEFT = 0;
     public static final int RIGHT = 1;
-    public static final int BOTTOM = 2;
-    public static final int TOP = 3;
+    public static final int TOP = 2;
+    public static final int BOTTOM = 3;
 
     private int left;
     private int right;
