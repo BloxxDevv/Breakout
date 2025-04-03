@@ -1,5 +1,7 @@
 package com.bloxxdev.breakout.gameObjects;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -14,7 +16,7 @@ public class Ball implements GameObject {
 
     public static final int SIZE = 10;
 
-    public static final int SPEED = 6;
+    public static final int SPEED = 6;  //Default = 6
 
     private SpriteBatch spriteBatch;
 
@@ -22,6 +24,8 @@ public class Ball implements GameObject {
 
     private int x;
     private int y;
+
+    private AABB hitbox;
 
     private boolean[] movement = new boolean[]
     {
@@ -35,6 +39,8 @@ public class Ball implements GameObject {
         this.x = x;
         this.y = y;
 
+        this.hitbox = new AABB(x, y, SIZE, SIZE);
+
         ballTexture = new Texture(Gdx.files.internal("Ball.png"));
         spriteBatch = new SpriteBatch();
     }
@@ -43,161 +49,104 @@ public class Ball implements GameObject {
         this.movement[direction] = value;
     }
 
-    private boolean checkBlocks(int direction){
-        boolean collided = false;
-
-        int blockX = 0;
-        int blockY = 0;
-
-        Block[] blocksArr = new Block[Breakout.blocks.size()];
-
-        int c = 0;
-
-        for (Block b : Breakout.blocks) {
-            if (direction == UP) {
-                if (y+SIZE+SPEED > b.getY() && y+SIZE < b.getY()){
-                    if (x < b.getX()+Block.WIDTH && x+SIZE > b.getX()) {
-                        blockY = b.getY();
-                        collided = true;
-                        if (b.getBlockType() > 1){
-                            b.damageBlock();
-                        }else if (b.getBlockType() > -1){
-                            blocksArr[c++] = b;
-                        }
-                    }
-                }
-            }else if (direction == DOWN) {
-                if (y-SPEED < b.getY()+Block.HEIGHT && y > b.getY()+Block.HEIGHT) {
-                    if (x < b.getX()+Block.WIDTH && x+SIZE > b.getX()) {
-                        blockY = b.getY();
-                        collided = true;
-                        if (b.getBlockType() > 1){
-                            b.damageBlock();
-                        }else if (b.getBlockType() > -1){
-                            blocksArr[c++] = b;
-                        }
-                    }
-                }
-            }else if (direction == LEFT) {
-                if (x-SPEED < b.getX()+Block.WIDTH && x > b.getX()+Block.HEIGHT){
-                    if (y < b.getY()+Block.HEIGHT && y+SIZE > b.getY()) {
-                        blockX = b.getX();
-                        collided = true;
-                        if (b.getBlockType() > 1){
-                            b.damageBlock();
-                        }else if (b.getBlockType() > -1){
-                            blocksArr[c++] = b;
-                        }
-                    }
-                }
-            }else if (direction == RIGHT) {
-                if (x+SIZE+SPEED > b.getX() && x+SIZE < b.getX()) {
-                    if (y < b.getY()+Block.HEIGHT && y+SIZE > b.getY()) {
-                        blockX = b.getX();
-                        collided = true;
-                        if (b.getBlockType() > 1){
-                            b.damageBlock();
-                        }else if (b.getBlockType() > -1){
-                            blocksArr[c++] = b;
-                        }
-                    }
-                }
-            }
-        }
-
-        for (Block block : blocksArr) {
-            Breakout.blocks.remove(block);
-        }
-
-        if (collided) {
-            if (direction == UP) {
-                int dist = blockY - (y+SIZE);
-                y += dist - (SPEED - dist);
-
-                movement[UP] = false;
-                movement[DOWN] = true;
-            }else if (direction == DOWN) {
-                int dist = y-(blockY+Block.HEIGHT);
-                y-= dist - (SPEED - dist);
-
-                movement[DOWN] = false;
-                movement[UP] = true;
-            }else if (direction == LEFT) {
-                int dist = x-(blockX+Block.WIDTH);
-                x -= dist - (SPEED - dist);
-
-                movement[LEFT] = false;
-                movement[RIGHT] = true;
-            }else if (direction == RIGHT) {
-                int dist = blockX - (x+SIZE);
-                x += dist - (SPEED - dist);
-
-                movement[RIGHT] = false;
-                movement[LEFT] = true;
-            }
-        }
-
-        return collided;
+    private void checkBlocks(){
+        
     }
 
-    private void move(){
-        if (movement[LEFT]) {
-            if (x-SPEED >= 0) {
-                if (!checkBlocks(LEFT)) {
-                    x-=SPEED;
-                }
-            }else {
-                int dist = x;
-                x -= dist - (SPEED - dist);
+    int d = 0;
+    int lastxdir = 0;
+    int lastydir = 0;
 
+    private void move(){
+        int remainingDist = SPEED;
+        
+        while(remainingDist > 0){
+            int xdir = 0;
+            int ydir = 0;
+
+            if (hitbox.getCorners()[AABB.LEFT] == 0) {
                 movement[LEFT] = false;
                 movement[RIGHT] = true;
-            }
-        }else if (movement[RIGHT]) {
-            if (x+SIZE+SPEED <= Gdx.graphics.getWidth()) {
-                if (!checkBlocks(RIGHT)) {
-                    x+=SPEED;
-                }
-            }else{
-                int dist = Gdx.graphics.getWidth() - (x+SIZE);
-                x += dist - (SPEED - dist);
-
+            }else if (hitbox.getCorners()[AABB.RIGHT] == Gdx.graphics.getWidth()-1) {
                 movement[RIGHT] = false;
                 movement[LEFT] = true;
             }
-        }
-
-        if (movement[UP]) {
-            if (y+SIZE+SPEED <= Gdx.graphics.getHeight()) {
-                if (!checkBlocks(UP)) {
-                    y+=SPEED;
-                }
-            }else{
-                System.out.println(y);
-                int dist = Gdx.graphics.getHeight() - (y+SIZE);
-                y += dist - (SPEED - dist);
-
+            if (hitbox.getCorners()[AABB.BOTTOM] == Paddle.PADDLE_HEIGHT) {
+                //if (hitbox.getCorners()[AABB.RIGHT] >= ((Paddle)Breakout.paddle).getX() && 
+                //    hitbox.getCorners()[AABB.LEFT] <= ((Paddle)Breakout.paddle).getX()+Paddle.PADDLE_WIDTH-1){
+                    movement[DOWN] = false;
+                    movement[UP] = true;
+                //}
+            }else if (hitbox.getCorners()[AABB.TOP] == Gdx.graphics.getHeight()-1) {
                 movement[UP] = false;
                 movement[DOWN] = true;
             }
-        }else if (movement[DOWN]) {
-            if (y-SPEED >= Paddle.PADDLE_HEIGHT) {
-                if (!checkBlocks(DOWN)) {
-                    y-=SPEED;
-                }
-            }else if (x+SIZE >= ((Paddle)Breakout.paddle).getX() && x <= ((Paddle)Breakout.paddle).getX() + Paddle.PADDLE_WIDTH){
-                int dist = y-SIZE;
-                y-= dist - (SPEED - dist);
 
-                movement[DOWN] = false;
-                movement[UP] = true;
-            }else{
-                y-=SPEED;
-                Breakout.dead = true;
-                for (int i = 0; i < movement.length; i++) {
-                    movement[i] = false;
+            ArrayList<Block> vertIntersect = new ArrayList<>();
+            ArrayList<Block> horIntersect = new ArrayList<>();
+            ArrayList<Block> bothIntersect = new ArrayList<>();
+
+            AABB vertMoveBox = hitbox.cloneMove(0, lastydir);
+            AABB horMoveBox = hitbox.cloneMove(lastxdir, 0);
+            AABB bothMoveBox = hitbox.cloneMove(lastxdir, lastydir);
+
+            for (Block b : Breakout.blocks) {
+                if (hitbox.intersects(b.getHitbox())) {
+                    System.out.println("BRO HOW THE FUCK MAN");
+                }
+                if (vertMoveBox.intersects(b.getHitbox())) {
+                    vertIntersect.add(b);
+                }
+                if (horMoveBox.intersects(b.getHitbox())) {
+                    horIntersect.add(b);
+                }
+                if (bothMoveBox.intersects(b.getHitbox())) {
+                    System.out.println("yep");
+                    bothIntersect.add(b);
                 }
             }
+
+            if (bothIntersect.size() > 0 && (horIntersect.isEmpty() && vertIntersect.isEmpty())) {
+                movement[LEFT] = !movement[LEFT];
+                movement[RIGHT] = !movement[RIGHT];
+                movement[UP] = !movement[UP];
+                movement[DOWN] = !movement[DOWN];
+                System.out.println(d++);
+            }else{
+                if (horIntersect.size() > 0 && vertIntersect.size() < 2) {
+                    movement[LEFT] = !movement[LEFT];
+                    movement[RIGHT] = !movement[RIGHT];
+                }
+                if (vertIntersect.size() > 0 && horIntersect.size() < 2) {
+                    movement[UP] = !movement[UP];
+                    movement[DOWN] = !movement[DOWN];
+                }
+            }
+
+            for (Block b : vertIntersect) {
+                b.damageBlock();
+            }
+            for (Block b : horIntersect) {
+                b.damageBlock();
+            }
+
+            if (movement[LEFT]) {
+                xdir = -1;
+            }else if (movement[RIGHT]){
+                xdir = 1;
+            }
+            if (movement[UP]) {
+                ydir = 1;
+            }else if (movement[DOWN]){
+                ydir = -1;
+            }
+            
+            x+=xdir;
+            y+=ydir;
+            lastxdir = xdir;
+            lastydir = ydir;
+            hitbox.setPos(x, y);
+            remainingDist--;
         }
     }
 
@@ -215,7 +164,7 @@ public class Ball implements GameObject {
 
     @Override
     public void dispose() {
-        
+
     }
-    
+
 }
