@@ -22,4 +22,6 @@ public class Textures {
     public static final Texture PADDLE_TEXTURE = new Texture(Gdx.files.internal("Paddle.png"));
     public static final Texture BALL_TEXTXURE = new Texture(Gdx.files.internal("Ball.png"));
     public static final Texture BLOCK_TEXTXURE = new Texture(Gdx.files.internal("Block.png"));
+
+    public static final Texture FONT_MAP = new Texture(Gdx.files.internal("Font.png"));
 }

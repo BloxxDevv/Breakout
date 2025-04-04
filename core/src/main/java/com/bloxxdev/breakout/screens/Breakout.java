@@ -42,6 +42,9 @@ public class Breakout extends ScreenAdapter{
     ShapeRenderer renderer;
 
     Button pauseCloseButton;
+
+    Button restartBtn;
+    Button menuBtn;
     
     public Breakout(File data, int level){
         try{
@@ -87,7 +90,6 @@ public class Breakout extends ScreenAdapter{
             e.printStackTrace();
         }
 
-        this.level = level;
         this.renderer = new ShapeRenderer();
     }
 
@@ -141,7 +143,23 @@ public class Breakout extends ScreenAdapter{
            } 
         });
 
+        restartBtn = new Button(Textures.WIDE_BUTTON_TEXTURE, Textures.WIDE_BUTTON_TEXTURE_HOVER, null, Gdx.graphics.getWidth()/2-Textures.WIDE_BUTTON_TEXTURE.getWidth()/2, 300, "Restart", new EventExecutor() {
+            @Override
+            public void execute() {
+
+            }
+        });
+
+        menuBtn = new Button(Textures.WIDE_BUTTON_TEXTURE, Textures.WIDE_BUTTON_TEXTURE_HOVER, null, Gdx.graphics.getWidth()/2-Textures.WIDE_BUTTON_TEXTURE.getWidth()/2, 150, "Main menu", new EventExecutor() {
+            @Override
+            public void execute() {
+                     
+            }
+        });
+
         pauseCloseButton.setLocked(false);
+        restartBtn.setLocked(false);
+        menuBtn.setLocked(false);
 
         Gdx.gl.glClearColor(20/255.0F, 20/255.0F, 100/255.0F, 0);
 
@@ -186,6 +204,8 @@ public class Breakout extends ScreenAdapter{
 
         if (drawPauseMenu) {
             pauseCloseButton.tick();
+            restartBtn.tick();
+            menuBtn.tick();
         }
     }
 
@@ -214,6 +234,9 @@ public class Breakout extends ScreenAdapter{
                 Gdx.gl20.glDisable(GL20.GL_BLEND);
 
                 pauseCloseButton.render();
+                restartBtn.render();
+                menuBtn.render();
+
             }
         }
     }
