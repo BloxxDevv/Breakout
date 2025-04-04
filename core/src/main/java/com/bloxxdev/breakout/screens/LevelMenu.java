@@ -8,7 +8,7 @@ import com.bloxxdev.breakout.menuItems.EventExecutor;
 import com.bloxxdev.breakout.util.Textures;
 
 public class LevelMenu extends ScreenAdapter{
-    boolean shouldRender = false;
+    public static boolean shouldRender = false;
 
     SpriteBatch spriteBatch;
     

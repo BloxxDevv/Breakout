@@ -11,7 +11,7 @@ import com.bloxxdev.breakout.screens.LevelMenu;
 public class Main extends ApplicationAdapter {
 
     public static Breakout breakout;
-    public LevelMenu levelSelector;
+    public static LevelMenu levelSelector;
 
     public static Main instance;
 

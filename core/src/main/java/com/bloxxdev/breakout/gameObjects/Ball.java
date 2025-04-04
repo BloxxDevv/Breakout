@@ -145,9 +145,7 @@ public class Ball implements GameObject {
 
     @Override
     public void tick() {
-        if (!Breakout.paused) {
-            move();
-        }
+        move();
     }
 
     @Override

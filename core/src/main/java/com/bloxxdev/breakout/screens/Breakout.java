@@ -28,7 +28,7 @@ public class Breakout extends ScreenAdapter{
     GameObject ball;
 
     public static boolean dead = false;
-    public static boolean paused = true;
+    public boolean paused = true;
 
     public static ArrayList<Block> blocks = new ArrayList<>();
 
@@ -146,14 +146,22 @@ public class Breakout extends ScreenAdapter{
         restartBtn = new Button(Textures.WIDE_BUTTON_TEXTURE, Textures.WIDE_BUTTON_TEXTURE_HOVER, null, Gdx.graphics.getWidth()/2-Textures.WIDE_BUTTON_TEXTURE.getWidth()/2, 300, "Restart", new EventExecutor() {
             @Override
             public void execute() {
-
+                shouldRender = false;
+                Main.breakout = new Breakout(Main.levels[level-1], level);
+                Main.breakout.show();
+                hide();
+                System.gc();
             }
         });
 
         menuBtn = new Button(Textures.WIDE_BUTTON_TEXTURE, Textures.WIDE_BUTTON_TEXTURE_HOVER, null, Gdx.graphics.getWidth()/2-Textures.WIDE_BUTTON_TEXTURE.getWidth()/2, 150, "Main menu", new EventExecutor() {
             @Override
             public void execute() {
-                     
+                shouldRender = false;
+                Main.breakout = null;
+                hide();
+                LevelMenu.shouldRender = true;
+                System.gc();
             }
         });
 
@@ -182,19 +190,19 @@ public class Breakout extends ScreenAdapter{
     }
 
     public void tick(){
-        if (won() && !Main.instance.levelSelector.shouldRender) {
+        if (won() && !LevelMenu.shouldRender) {
             shouldLoop = false;
             if (level < 5) {
                 level++;   
             }
             hide();
-            Main.instance.levelSelector.shouldRender = true;
+            LevelMenu.shouldRender = true;
             paused = true;
         }
 
         checkKeys();
 
-        if (!dead && shouldLoop){
+        if (!dead && shouldLoop && !paused){
             paddle.tick();
             ball.tick();
             for (Block b : blocks) {
