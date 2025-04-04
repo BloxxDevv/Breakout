@@ -4,7 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.bloxxdev.breakout.gameObjects.phys.AABB;
 import com.bloxxdev.breakout.screens.Breakout;
+import com.bloxxdev.breakout.util.Textures;
 
 public class Block implements GameObject{
     public static final int WIDTH = 40;
@@ -13,7 +15,6 @@ public class Block implements GameObject{
     private int x;
     private int y;
 
-    private Texture blockTexture;
     private SpriteBatch spriteBatch;
 
     private Color color;
@@ -23,7 +24,6 @@ public class Block implements GameObject{
     private AABB hitbox;
 
     public Block(int x, int y, int blockType){
-        blockTexture = new Texture(Gdx.files.internal("Block.png"));
         spriteBatch = new SpriteBatch();
 
         this.x = x;
@@ -95,7 +95,7 @@ public class Block implements GameObject{
     public void render() {
         spriteBatch.begin();
         spriteBatch.setColor(color);
-        spriteBatch.draw(blockTexture, x, y, WIDTH, HEIGHT);
+        spriteBatch.draw(Textures.BLOCK_TEXTXURE, x, y, WIDTH, HEIGHT);
         spriteBatch.end();
     }
 

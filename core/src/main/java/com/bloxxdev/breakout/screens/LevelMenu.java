@@ -1,21 +1,14 @@
 package com.bloxxdev.breakout.screens;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.bloxxdev.breakout.Main;
 import com.bloxxdev.breakout.menuItems.Button;
 import com.bloxxdev.breakout.menuItems.EventExecutor;
+import com.bloxxdev.breakout.util.Textures;
 
 public class LevelMenu extends ScreenAdapter{
     boolean shouldRender = false;
-
-    Texture mapTexture;
-
-    Texture levelButton;
-    Texture levelButtonHover;
-    Texture levelButtonLocked;
 
     SpriteBatch spriteBatch;
     
@@ -24,12 +17,8 @@ public class LevelMenu extends ScreenAdapter{
     @Override
     public void show() {
         spriteBatch = new SpriteBatch();
-        mapTexture = new Texture(Gdx.files.internal("Map.png"));
-        levelButton = new Texture(Gdx.files.internal("LevelButton.png"));
-        levelButtonHover = new Texture(Gdx.files.internal("LevelButtonHover.png"));
-        levelButtonLocked = new Texture(Gdx.files.internal("LevelButtonLocked.png"));
 
-        buttons[0] = new Button(levelButton, levelButtonHover, levelButtonLocked, 160, 230, "1", new EventExecutor() {
+        buttons[0] = new Button(Textures.LEVEL_BUTTON, Textures.LEVEL_BUTTON_HOVER, Textures.LEVEL_BUTTON_LOCKED, 160, 230, "1", new EventExecutor() {
             @Override
             public void execute() {
                 hide();
@@ -37,7 +26,7 @@ public class LevelMenu extends ScreenAdapter{
                 Main.breakout.show();
             }
         });
-        buttons[1] = new Button(levelButton, levelButtonHover, levelButtonLocked, 240, 430, "2", new EventExecutor() {
+        buttons[1] = new Button(Textures.LEVEL_BUTTON, Textures.LEVEL_BUTTON_HOVER, Textures.LEVEL_BUTTON_LOCKED, 240, 430, "2", new EventExecutor() {
             @Override
             public void execute() {
                 hide();
@@ -45,7 +34,7 @@ public class LevelMenu extends ScreenAdapter{
                 Main.breakout.show();
             }
         });
-        buttons[2] = new Button(levelButton, levelButtonHover, levelButtonLocked, 305, 270, "3", new EventExecutor() {
+        buttons[2] = new Button(Textures.LEVEL_BUTTON, Textures.LEVEL_BUTTON_HOVER, Textures.LEVEL_BUTTON_LOCKED, 305, 270, "3", new EventExecutor() {
             @Override
             public void execute() {
                 hide();
@@ -53,7 +42,7 @@ public class LevelMenu extends ScreenAdapter{
                 Main.breakout.show();
             }
         });
-        buttons[3] = new Button(levelButton, levelButtonHover, levelButtonLocked, 510, 250, "4", new EventExecutor() {
+        buttons[3] = new Button(Textures.LEVEL_BUTTON, Textures.LEVEL_BUTTON_HOVER, Textures.LEVEL_BUTTON_LOCKED, 510, 250, "4", new EventExecutor() {
             @Override
             public void execute() {
                 hide();
@@ -61,7 +50,7 @@ public class LevelMenu extends ScreenAdapter{
                 Main.breakout.show();
             }
         });
-        buttons[4] = new Button(levelButton, levelButtonHover, levelButtonLocked, 640, 400, "5", new EventExecutor() {
+        buttons[4] = new Button(Textures.LEVEL_BUTTON, Textures.LEVEL_BUTTON_HOVER, Textures.LEVEL_BUTTON_LOCKED, 640, 400, "5", new EventExecutor() {
             @Override
             public void execute() {
                 hide();
@@ -89,7 +78,7 @@ public class LevelMenu extends ScreenAdapter{
         if (shouldRender) {
             spriteBatch.begin();
 
-            spriteBatch.draw(mapTexture, 0, 0);
+            spriteBatch.draw(Textures.MAP_TEXTURE, 0, 0);
         
             spriteBatch.end();
     

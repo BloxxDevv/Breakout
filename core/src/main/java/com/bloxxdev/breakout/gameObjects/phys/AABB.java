@@ -1,4 +1,4 @@
-package com.bloxxdev.breakout.gameObjects;
+package com.bloxxdev.breakout.gameObjects.phys;
 
 public class AABB {
 

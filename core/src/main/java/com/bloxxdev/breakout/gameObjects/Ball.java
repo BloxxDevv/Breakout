@@ -3,11 +3,14 @@ package com.bloxxdev.breakout.gameObjects;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.bloxxdev.breakout.gameObjects.phys.AABB;
 import com.bloxxdev.breakout.screens.Breakout;
+import com.bloxxdev.breakout.util.Textures;
 
 public class Ball implements GameObject {
+
+    public static final boolean INVULNERABLE = false;
 
     public static final int UP = 0;
     public static final int DOWN = 1;
@@ -19,8 +22,6 @@ public class Ball implements GameObject {
     public static final int SPEED = 6;  //Default = 6
 
     private SpriteBatch spriteBatch;
-
-    private Texture ballTexture;
 
     private int x;
     private int y;
@@ -41,7 +42,6 @@ public class Ball implements GameObject {
 
         this.hitbox = new AABB(x, y, SIZE, SIZE);
 
-        ballTexture = new Texture(Gdx.files.internal("Ball.png"));
         spriteBatch = new SpriteBatch();
     }
 
@@ -56,7 +56,7 @@ public class Ball implements GameObject {
 
     private void move(){
         int remainingDist = SPEED;
-        
+
         while(remainingDist > 0){
             int xdir = 0;
             int ydir = 0;
@@ -69,8 +69,9 @@ public class Ball implements GameObject {
                 movement[LEFT] = true;
             }
             if (hitbox.getCorners()[AABB.BOTTOM] == Paddle.PADDLE_HEIGHT) {
-                if (hitbox.getCorners()[AABB.RIGHT] >= ((Paddle)Breakout.paddle).getX() && 
-                    hitbox.getCorners()[AABB.LEFT] <= ((Paddle)Breakout.paddle).getX()+Paddle.PADDLE_WIDTH-1){
+                if ((hitbox.getCorners()[AABB.RIGHT] >= ((Paddle)Breakout.paddle).getX() && 
+                    hitbox.getCorners()[AABB.LEFT] <= ((Paddle)Breakout.paddle).getX()+Paddle.PADDLE_WIDTH-1)
+                    || INVULNERABLE){
                     movement[DOWN] = false;
                     movement[UP] = true;
                 }
@@ -152,7 +153,7 @@ public class Ball implements GameObject {
     @Override
     public void render() {
         spriteBatch.begin();
-        spriteBatch.draw(ballTexture, x, y, SIZE, SIZE);
+        spriteBatch.draw(Textures.BALL_TEXTXURE, x, y, SIZE, SIZE);
         spriteBatch.end();
     }
 

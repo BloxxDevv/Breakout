@@ -67,7 +67,9 @@ public class Button {
 
         spriteBatch.end();
 
-        numberFont.drawNumber(Integer.parseInt(text), (x + width/2) - (text.length()*NumberFont.FONT_WIDTH + (text.length()-1) * NumberFont.SPACING) / 2, (y + height/2) - NumberFont.FONT_HEIGHT/2, 1);
+        if (!text.isEmpty()) {
+            numberFont.drawNumber(Integer.parseInt(text), (x + width/2) - (text.length()*NumberFont.FONT_WIDTH + (text.length()-1) * NumberFont.SPACING) / 2, (y + height/2) - NumberFont.FONT_HEIGHT/2, 1);
+        }
     }
 
     public void dispose(){
