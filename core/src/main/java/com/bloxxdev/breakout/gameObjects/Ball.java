@@ -75,6 +75,8 @@ public class Ball implements GameObject {
                     || INVULNERABLE){
                     movement[DOWN] = false;
                     movement[UP] = true;
+                }else{
+                    Main.breakout.die();
                 }
             }else if (hitbox.getCorners()[AABB.TOP] == Gdx.graphics.getHeight()-1) {
                 movement[UP] = false;

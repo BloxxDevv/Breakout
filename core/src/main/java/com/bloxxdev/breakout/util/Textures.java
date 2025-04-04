@@ -24,4 +24,7 @@ public class Textures {
     public static final Texture BLOCK_TEXTXURE = new Texture(Gdx.files.internal("Block.png"));
 
     public static final Texture FONT_MAP = new Texture(Gdx.files.internal("Font.png"));
+
+    public static final Texture LEVEL_COMPLETED = new Texture(Gdx.files.internal("LevelCompletedLabel.png"));
+    public static final Texture GAME_OVER = new Texture(Gdx.files.internal("GameOverLabel.png"));
 }
