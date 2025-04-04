@@ -27,10 +27,10 @@ public class Breakout extends ScreenAdapter{
 
     GameObject ball;
 
-    public static boolean dead = false;
-    public boolean paused = true;
+    private boolean dead = false;
+    private boolean paused = true;
 
-    public static ArrayList<Block> blocks = new ArrayList<>();
+    public ArrayList<Block> blocks = new ArrayList<>();
 
     private boolean shouldLoop = false;
     private boolean shouldRender = false;
@@ -46,7 +46,10 @@ public class Breakout extends ScreenAdapter{
     Button restartBtn;
     Button menuBtn;
     
+    private int currentLevel;
+
     public Breakout(File data, int level){
+        this.currentLevel = level;
         try{
             BufferedReader br = new BufferedReader(new FileReader(data));
             while (br.ready()) {           
@@ -192,7 +195,7 @@ public class Breakout extends ScreenAdapter{
     public void tick(){
         if (won() && !LevelMenu.shouldRender) {
             shouldLoop = false;
-            if (level < 5) {
+            if (level < 5 && currentLevel == level) {
                 level++;   
             }
             hide();

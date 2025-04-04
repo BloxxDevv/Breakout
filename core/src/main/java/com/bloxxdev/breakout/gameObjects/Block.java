@@ -2,8 +2,8 @@ package com.bloxxdev.breakout.gameObjects;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.bloxxdev.breakout.Main;
 import com.bloxxdev.breakout.gameObjects.phys.AABB;
-import com.bloxxdev.breakout.screens.Breakout;
 import com.bloxxdev.breakout.util.Textures;
 
 public class Block implements GameObject{
@@ -60,7 +60,7 @@ public class Block implements GameObject{
     public void damageBlock(){
         blockType--;
         if (blockType == 0) {
-            Breakout.blocks.remove(this);
+            Main.breakout.blocks.remove(this);
         }
     }
 

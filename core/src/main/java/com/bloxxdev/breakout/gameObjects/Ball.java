@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.bloxxdev.breakout.Main;
 import com.bloxxdev.breakout.gameObjects.phys.AABB;
 import com.bloxxdev.breakout.screens.Breakout;
 import com.bloxxdev.breakout.util.Textures;
@@ -88,7 +89,7 @@ public class Ball implements GameObject {
             AABB horMoveBox = hitbox.cloneMove(lastxdir, 0);
             AABB bothMoveBox = hitbox.cloneMove(lastxdir, lastydir);
 
-            for (Block b : Breakout.blocks) {
+            for (Block b : Main.breakout.blocks) {
                 if (vertMoveBox.intersects(b.getHitbox())) {
                     vertIntersect.add(b);
                 }
