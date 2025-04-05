@@ -1,5 +1,6 @@
 package com.bloxxdev.breakout.screens;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.bloxxdev.breakout.Main;
@@ -14,9 +15,23 @@ public class LevelMenu extends ScreenAdapter{
     
     public static Button[] buttons = new Button[5];
 
+    private Button mainMenu;
+
     @Override
     public void show() {
         spriteBatch = new SpriteBatch();
+
+        mainMenu = new Button(Textures.CLOSE_TEXTURE, Textures.CLOSE_TEXTURE_HOVER, null, 10, Gdx.graphics.getHeight() - Textures.CLOSE_TEXTURE.getHeight() - 10, "", new EventExecutor() {
+            @Override
+            public void execute() {
+                shouldRender = false;
+                Main.levelSelector = null;
+                Main.mainMenu.shouldUpdate = true;
+                Main.mainMenu.shouldRender = true;
+            }
+        });
+
+        mainMenu.setLocked(false);
 
         buttons[0] = new Button(Textures.LEVEL_BUTTON, Textures.LEVEL_BUTTON_HOVER, Textures.LEVEL_BUTTON_LOCKED, 160, 230, "1", new EventExecutor() {
             @Override
@@ -67,6 +82,7 @@ public class LevelMenu extends ScreenAdapter{
         }
 
         if (shouldRender) {
+            mainMenu.tick();
             for (Button button : buttons) {
                 button.tick();
             }
@@ -81,6 +97,8 @@ public class LevelMenu extends ScreenAdapter{
             spriteBatch.draw(Textures.MAP_TEXTURE, 0, 0);
         
             spriteBatch.end();
+
+            mainMenu.render();
     
             for (Button button : buttons) {
                 button.render();
