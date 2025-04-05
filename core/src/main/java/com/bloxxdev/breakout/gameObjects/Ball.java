@@ -20,7 +20,7 @@ public class Ball implements GameObject {
 
     public static final int SIZE = 10;
 
-    public static final int SPEED = 6;  //Default = 6
+    public static final int SPEED = 5;  //Default = 6
 
     private SpriteBatch spriteBatch;
 

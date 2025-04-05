@@ -259,6 +259,15 @@ public class Breakout extends ScreenAdapter{
         }
     }
 
+    @Override
+    public void pause() {
+        if (!drawPauseMenu) {
+            paused = !paused;
+            shouldLoop = !shouldLoop;
+            drawPauseMenu = !drawPauseMenu;
+        }
+    }
+
     public static final int PAUSE_MENU_WIDTH = 400;
     public static final int PAUSE_MENU_HEIGHT = 500;
 

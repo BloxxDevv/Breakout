@@ -2,6 +2,9 @@ package com.bloxxdev.breakout.lwjgl3;
 
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
+import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Window;
+import com.badlogic.gdx.backends.lwjgl3.Lwjgl3WindowAdapter;
+import com.badlogic.gdx.backends.lwjgl3.Lwjgl3WindowListener;
 import com.bloxxdev.breakout.Main;
 
 /** Launches the desktop (LWJGL3) application. */
@@ -31,6 +34,15 @@ public class Lwjgl3Launcher {
         configuration.setWindowedMode(800, 600);
 
         configuration.setResizable(false);
+
+        configuration.setWindowListener(new Lwjgl3WindowAdapter(){
+            @Override
+            public void focusLost() {
+                if (Main.breakout != null) {
+                    Main.breakout.pause();
+                }
+            }
+        });
         return configuration;
     }
 }
