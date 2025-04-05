@@ -1,5 +1,6 @@
 package com.bloxxdev.breakout.menuItems;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -15,6 +16,8 @@ public class ButtonFont {
     private int spacing;
 
     private int scaling;
+
+    private Color fontColor = new Color(1.0F, 1.0F, 1.0F, 1.0F);
 
     TextureRegion[] characters = new TextureRegion[95];
 
@@ -39,8 +42,14 @@ public class ButtonFont {
         return charHeight * scaling;
     }
 
+    public void setFontColor(Color color){
+        this.fontColor = color;
+    }
+
     public void drawString(String text, int x, int y){
         batch.begin();
+
+        batch.setColor(fontColor);
 
         for (int i = 0; i < text.length(); i++) {
             Sprite charSprite = new Sprite(characters[text.charAt(i)-32]);

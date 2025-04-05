@@ -1,6 +1,7 @@
 package com.bloxxdev.breakout.menuItems;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -77,6 +78,7 @@ public class Button {
         if (isNumberString(text)) {
             numberFont.drawNumber(Integer.parseInt(text), (x + width/2) - (text.length()*NumberFont.FONT_WIDTH + (text.length()-1) * NumberFont.SPACING) / 2, (y + height/2) - NumberFont.FONT_HEIGHT/2, 1);
         }else{
+            this.buttonFont.setFontColor(new Color(0.3F, 0.3F, 0.3F, 1.0F));
             this.buttonFont.drawString(text, x + width/2 - buttonFont.getStringWidth(text)/2, y + height/2 - buttonFont.getStringHeight(text)/2);
         }
 

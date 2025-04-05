@@ -11,6 +11,9 @@ public class Textures {
     public static final Texture WIDE_BUTTON_TEXTURE = new Texture(Gdx.files.internal("EmptyButton.png"));
     public static final Texture WIDE_BUTTON_TEXTURE_HOVER = new Texture(Gdx.files.internal("EmptyButtonHover.png"));
     
+    public static final Texture SMALL_BUTTON_TEXTURE = new Texture(Gdx.files.internal("EmptyButtonShort.png"));
+    public static final Texture SMALL_BUTTON_TEXTURE_HOVER = new Texture(Gdx.files.internal("EmptyButtonShortHover.png"));
+
     public static final Texture MAP_TEXTURE = new Texture(Gdx.files.internal("Map.png"));
 
     public static final Texture LEVEL_BUTTON = new Texture(Gdx.files.internal("LevelButton.png"));
@@ -27,4 +30,7 @@ public class Textures {
 
     public static final Texture LEVEL_COMPLETED = new Texture(Gdx.files.internal("LevelCompletedLabel.png"));
     public static final Texture GAME_OVER = new Texture(Gdx.files.internal("GameOverLabel.png"));
+
+    public static final Texture BREAKOUT_TITLE = new Texture(Gdx.files.internal("BreakoutTitle.png"));
+
 }

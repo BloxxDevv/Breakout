@@ -21,6 +21,7 @@ import com.bloxxdev.breakout.gameObjects.GameObject;
 import com.bloxxdev.breakout.gameObjects.Paddle;
 import com.bloxxdev.breakout.menuItems.Button;
 import com.bloxxdev.breakout.menuItems.EventExecutor;
+import com.bloxxdev.breakout.util.FileHandler;
 import com.bloxxdev.breakout.util.Textures;
 
 public class Breakout extends ScreenAdapter{
@@ -37,7 +38,7 @@ public class Breakout extends ScreenAdapter{
     private boolean shouldLoop = false;
     private boolean shouldRender = false;
 
-    public static int level = 1;
+    public static int level = (int) FileHandler.readFile(Main.instance.getPlayerData());
 
     boolean escLock = false;
 
@@ -197,7 +198,7 @@ public class Breakout extends ScreenAdapter{
     public void winAnimation(){
         shouldLoop = false;
         if (level < 5 && currentLevel == level) {
-            level++;   
+            FileHandler.writeFile(Main.instance.getPlayerData(), ++level);   
         }
         hide();
         Main.breakout = null;
